@@ -1,0 +1,30 @@
+{% extends 'catalog/base.html'%}
+{% load my_tags %}
+{% block content %}
+
+<div class="col-3">
+
+    <div class="card mb-4 box-shadow">
+        {% for object in object_list %}
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Цена: {{object.price}} руб</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{object.title}}</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>- {{object.description}}</li>
+                <li>- Категория: {{object.category}}</li>
+                <li>- Дата создания:{{object.date_of_creation}}</li>
+                <li>- Дата последнего изменения: {{object.last_modified_date}}</li>
+                <img class="card-img-top"
+                     src="{{ object.image|mymedia }}"
+                     alt="Card image cap">
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
