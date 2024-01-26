@@ -1,7 +1,7 @@
 from django.urls import path
 
 from blog.apps import BlogConfig
-from blog.views import BlogCreateView, BlogListView, BlogDetailView, BlogUpdateView, BlogDeleteView
+from blog.views import BlogCreateView, BlogListView, BlogDetailView, BlogUpdateView, BlogDeleteView, toogle_activity
 
 app_name = BlogConfig.name
 
@@ -11,5 +11,6 @@ urlpatterns = [
     path('view/<int:pk>/', BlogDetailView.as_view(), name='view'),
     path('edit/<int:pk>/', BlogUpdateView.as_view(), name='edit'),
     path('delete/<int:pk>/', BlogDeleteView.as_view(), name='delete'),
+    path('activity/<int:pk>/', toogle_activity, name='toogle_activity'),
 
 ]

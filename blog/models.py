@@ -4,7 +4,7 @@ NULLABLE = {'blank': True, 'null': True}
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=250, verbose_name='Заголовок')
-    slug = models.CharField(max_length=150, verbose_name='slug')
+    slug = models.CharField(max_length=150, verbose_name='slug', **NULLABLE)
     body = models.TextField(verbose_name='Содержимое')
     preview = models.ImageField(upload_to='blogs/', **NULLABLE, verbose_name='Изображение')
     date_of_creation = models.DateField(**NULLABLE, verbose_name='Дата создания')
