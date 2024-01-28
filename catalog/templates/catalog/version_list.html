@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html'%}
+{% load my_tags %}
+{% block content %}
+
+<div class="col-3">
+
+    <div class="card mb-4 box-shadow">
+        {% for object in object_list %}
+        <div class="card-header">
+<!--            <h4 class="my-0 font-weight-normal">Цена: {{object.price}} руб</h4>-->
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{object.title}}</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>- Продукт: {{object.product}}</li>
+                <li>- Номер версии: {{object.version_number}}</li>
+                <li>- Название версии:{{object.version_title}}</li>
+                <li>- Активность версии: {{object.is_active}}</li>
+
+<!--                <img class="card-img-top"-->
+<!--                     src="{{ object.image|mymedia }}"-->
+<!--                     alt="Card image cap">-->
+            </ul>
+<!--            <a href="{% url 'catalog:view_product' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">view</a>-->
+<!--            <a href="{% url 'catalog:update_product' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">edit</a>-->
+<!--            <a href="{% url 'catalog:delete_product' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">delete</a>-->
+
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

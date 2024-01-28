@@ -104,16 +104,9 @@ class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')
 
-# def version_active(request, pk):
-#     version_item = Product.objects.get(pk=pk)
-#     context = {
-#         'object_list': Product.objects.filter(id=pk),
-#     }
-#     return render(request, 'catalog/product_list.html', context)
-#
-# for product in queryset:
-#     version = product.version_set.all().filter(version_is_active=True).first()
-#     product.version = version
-
-
+def version_active(request, pk):
+    context = {
+        'object_list': Version.objects.filter(product_id=pk, is_active=True),
+    }
+    return render(request, 'catalog/version_list.html', context)
 
