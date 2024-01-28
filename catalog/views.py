@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.forms import inlineformset_factory
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView, DetailView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm
-from catalog.models import Product
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, Version
 
 
 # Create your views here.
@@ -77,7 +78,42 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        SubjectFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == "POST":
+            context_data['formset'] = SubjectFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = SubjectFormset(instance=self.object)
+
+        return context_data
+
+    def form_valid(self, form):
+
+        formset = self.get_context_data()['formset']
+        self.object.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
 
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')
+
+# def version_active(request, pk):
+#     version_item = Product.objects.get(pk=pk)
+#     context = {
+#         'object_list': Product.objects.filter(id=pk),
+#     }
+#     return render(request, 'catalog/product_list.html', context)
+#
+# for product in queryset:
+#     version = product.version_set.all().filter(version_is_active=True).first()
+#     product.version = version
+
+
+
