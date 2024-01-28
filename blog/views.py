@@ -22,6 +22,9 @@ class BlogCreateView(CreateView):
 
 class BlogListView(ListView):
     model = Blog
+    extra_context = {
+        'title': " Блог",
+    }
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
