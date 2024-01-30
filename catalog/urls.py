@@ -10,8 +10,6 @@ urlpatterns = [
     # path('', home),
     path('', HomeView.as_view(), name='home'),
     path('contacts/', contacts),
-    # path('home/', home),
-    # path('home/', HomeView.as_view()),
     # path('<int:pk>/product', product, name='product'),
     path('<int:pk>/product/', ProductListView.as_view(), name='product'),
     path('<int:pk>/view/', ProductDetailView.as_view(), name='view_product'),
