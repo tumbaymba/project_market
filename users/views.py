@@ -1,10 +1,15 @@
+import random
+
 from django.conf import settings
 from django.core.mail import send_mail
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
+
 
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
+from users.util import get_new_password
 
 
 class RegisterView(CreateView):
@@ -35,3 +40,20 @@ class ProfileView(UpdateView):
 
     def get_object(self, queryset=None):  # тем самым уходим от привязки с pk
         return self.request.user
+# Не работает не открывает страницу с новым паролем. Залипаем между кнопками Войти и Регистрация.
+# В Входе - Пожалуйста, введите правильные Почта и пароль. Оба поля могут быть чувствительны к регистру.
+# В Регистрации - Пользователь с таким Почта уже существует. Пат какой-то.
+def generate_new_password(request):
+    # new_password  = ''.join([str(random.randint(0, 9)) for string in range(10)])
+    # from django.contrib.auth.models import User
+    new_password = get_new_password()
+    send_mail(
+            subject='Вы сменили пароль',
+            message=f'Ваш новый пароль: {new_password}',
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[request.user.email]
+        )
+    request.user.set_password('new_password')
+    request.user.save()
+
+    return redirect(reverse('users:login'))
