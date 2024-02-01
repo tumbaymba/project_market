@@ -3,7 +3,7 @@ import random
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse
 
 
@@ -25,6 +25,22 @@ def activate_user(request, token):
             user.save()
     response = redirect('users/')
     return response
+
+# def activate_user(request, token):
+#
+#     context = {
+#         'title': "Подверждение",
+#     }
+#     if request.method == 'POST':
+#         token = request.POST.get('token')
+#         current_user = User.objects.filter(is_active=False)
+#         for user in current_user:
+#             if str(user.token) == str(token):
+#                 user.is_active = True
+#                 user.token = None
+#                 user.save()
+#     return render(request, 'users/verify.html', context)
+
 
 
 def generate_new_password(request):
