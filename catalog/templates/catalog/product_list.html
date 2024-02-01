@@ -6,6 +6,8 @@
 
     <div class="card mb-4 box-shadow">
         {% for object in object_list %}
+        {% if object.is_published or user.is_staff or user.is_superuser or user.is_active %}
+
         <div class="card-header">
             <h4 class="my-0 font-weight-normal">Цена: {{object.price}} руб</h4>
         </div>
@@ -28,6 +30,7 @@
 
 
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 
