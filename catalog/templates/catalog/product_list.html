@@ -18,7 +18,7 @@
                 <li>- Категория: {{object.category}}</li>
                 <li>- Дата создания:{{object.date_of_creation}}</li>
                 <li>- Дата последнего изменения: {{object.last_modified_date}}</li>
-
+                 <li>- Продавец: {{object.owner|default:"не указан"}}</li>
                 <img class="card-img-top"
                      src="{{ object.image|mymedia }}"
                      alt="Card image cap">
