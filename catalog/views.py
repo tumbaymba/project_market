@@ -1,5 +1,6 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import inlineformset_factory
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -39,6 +40,8 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['object_list'] = Product.objects.all()
+        if not self.request.user.is_staff:
+            context_data['object_list'] = Product.objects.filter(is_published=True)
         return context_data
 
 
@@ -55,11 +58,14 @@ class ProductListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(id=self.kwargs.get('pk'))
+        # if not self.request.user.is_staff:
+        #     queryset = queryset.filter(is_published=True)
         return queryset
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, PermissionRequiredMixin):
     model = Product
+    permission_required = 'catalog.view_product'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -67,10 +73,11 @@ class ProductDetailView(DetailView):
         return queryset
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, PermissionRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+    permission_required = 'catalog.add_product'
 
     # добавление автоматически продавца
     def form_valid(self, form):
@@ -80,14 +87,17 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, PermissionRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+    permission_required = 'catalog.change_product'
+
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         SubjectFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+
         if self.request.method == "POST":
             context_data['formset'] = SubjectFormset(self.request.POST, instance=self.object)
         else:
@@ -107,13 +117,17 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, PermissionRequiredMixin):
     model = Product
     success_url = reverse_lazy('catalog:home')
+    permission_required = 'catalog.delete_product'
 
+
+# @permission_required('catalog.view_version')
 def version_active(request, pk):
+
     context = {
         'object_list': Version.objects.filter(product_id=pk, is_active=True),
     }
-    return render(request, 'catalog/version_list.html', context)
 
+    return render(request, 'catalog/version_list.html', context)

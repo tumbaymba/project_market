@@ -23,14 +23,26 @@
                      src="{{ object.image|mymedia }}"
                      alt="Card image cap">
             </ul>
+
+            {% if perms.catalog.view_product %}
             <a href="{% url 'catalog:view_product' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">view</a>
-            <a href="{% url 'catalog:update_product' object.pk %}" type="button"
+            {% endif %}
+
+
+            {% if object.owner == request.user or user.is_superuser or user.is_staff %}
+                <a href="{% url 'catalog:update_product' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">edit</a>
-            <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
+            {% endif %}
+
+            {% if perms.catalog.delete_product %}
+                <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">delete</a>
-            <a href="{% url 'catalog:version_active' object.pk %}" type="button"
+            {% endif %}
+
+             <a href="{% url 'catalog:version_active' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">version_active</a>
+
 
 
         </div>
@@ -41,3 +53,10 @@
 </div>
 
 {% endblock %}
+
+
+<!--            {% if perms.catalog.view_version %}-->
+<!-- {% endif %}-->
+
+<!--{% if perms.catalog.change_product %}-->
+<!-- {% endif %}-->
