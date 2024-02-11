@@ -6,6 +6,7 @@
         {% if  user.is_superuser or user.is_active and perms.catalog.add_product  %}
             <div class="col-12 mb-5">
                 <a class="btn btn-outline-primary" href="{% url 'catalog:create_product'%}">Добавить продукт</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:category_list' %}">Категории продуктов</a>
             </div>
         {% endif%}
         <div class="row text-center">
