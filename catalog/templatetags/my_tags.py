@@ -6,5 +6,5 @@ register = template.Library()
 def mymedia(val):
     if val:
         return f"/media/{val}"
-    return f'static/no-image-500x500.jpg'
+    return f'static/empty.jpg'
 

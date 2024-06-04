@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'catalog',
+        'NAME': 'project_ORM',
         'USER': 'postgres',
-        'PASSWORD': 721719,
+        'PASSWORD': 'Rhts1428',
     }
 }
 
@@ -153,8 +153,8 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'noreply@oscarbot.ru'
-EMAIL_HOST_PASSWORD = 'AsTSNVv7pun9'
+EMAIL_HOST_USER = 'noreply@info.ru'
+EMAIL_HOST_PASSWORD = 'aevcszobbixdztet'
 
 
 CACHE_ENABLED=os.getenv('CACHE_ENABLED')=='True'

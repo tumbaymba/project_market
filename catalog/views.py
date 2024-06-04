@@ -26,11 +26,6 @@ def contacts(request):
     return render(request, 'catalog/contacts.html', context)
 
 
-# def home(request):
-#     context = {
-#         'object_list': Product.objects.all(),
-#     }
-#     return render(request, 'catalog/home.html', context)
 
 class HomeView(TemplateView):
     template_name = 'catalog/home.html'
@@ -45,13 +40,6 @@ class HomeView(TemplateView):
             context_data['object_list'] = Product.objects.filter(is_published=True)
         return context_data
 
-
-# def product(request, pk):
-#     product_item = Product.objects.get(pk=pk)
-#     context = {
-#         'object_list': Product.objects.filter(id=pk),
-#     }
-#     return render(request, 'catalog/product_list.html', context)
 
 class ProductListView(ListView):
     model = Product
@@ -124,13 +112,11 @@ class ProductDeleteView(DeleteView, PermissionRequiredMixin):
     permission_required = 'catalog.delete_product'
 
 
-# @permission_required('catalog.view_version')
 def version_active(request, pk):
 
     context = {
         'object_list': Version.objects.filter(product_id=pk, is_active=True),
     }
-
     return render(request, 'catalog/version_list.html', context)
 
 class CategoryListView(LoginRequiredMixin, ListView):

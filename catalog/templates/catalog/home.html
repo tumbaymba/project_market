@@ -2,26 +2,19 @@
 {% load my_tags %}
 {% block content %}
 
-    <div class="container">
-        {% if  user.is_superuser or user.is_active and perms.catalog.add_product  %}
-            <div class="col-12 mb-5">
-                <a class="btn btn-outline-primary" href="{% url 'catalog:create_product'%}">Добавить продукт</a>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:category_list' %}">Категории продуктов</a>
-            </div>
-        {% endif%}
-        <div class="row text-center">
-            {% for object in object_list %}
-
-                {% include 'catalog/includes/inc_product.html' with object=object %}
-
-            {% endfor %}
-        </div>
-        {% endblock %}
+<div class="container">
+    {% if user.is_superuser or user.is_active and perms.catalog.add_product %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-primary" href="{% url 'catalog:create_product'%}">Добавить продукт</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:category_list' %}">Категории продуктов</a>
     </div>
+    {% endif%}
+    <div class="row text-center">
+        {% for object in object_list %}
+        {% include 'catalog/includes/inc_product.html' with object=object %}
+        {% endfor %}
+    </div>
+    {% endblock %}
+</div>
 
 
-<!--            {% if object.is_published %}-->
-<!--            {% endif %}-->
-
-<!-- {% if user.is_superuser or user.is_active or perms.catalog.add_product %}-->
-<!--            {% endif %}-->

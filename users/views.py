@@ -17,26 +17,13 @@ class RegisterView(CreateView):
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:login')
 
-    # особенность на почту @gmail.com - письма не доходят, но на @mail.ru - работает
-    # Регистрация подвисает, несколько секунд. Иногда, регистрация - так и весит.
-    # Потом пробую вести - уже существует, И есть кнопка войти. и вход возможен.
-    # def form_valid(self, form):
-    #     new_user = form.save()
-    #     send_mail(
-    #         subject='Поздравляем с регистрацией',
-    #         message='Вы зарегистрировались на нашей платформе! Добро Пожаловать!',
-    #         from_email=settings.EMAIL_HOST_USER,
-    #         recipient_list=[new_user.email]
-    #     )
-    #
-    #     return super().form_valid(form)
 
     def form_valid(self, form):
         new_user = form.save()
         new_user.is_active = False
         secret_token = ''.join([str(random.randint(0, 9)) for string in range(10)])
         new_user.token = secret_token
-        message = f'Вы указали этот E-mail в качестве основного адреса на нашей платформе!\nДля подтверждения вашего Е-mail перейдите по ссылке http://127.0.0.1:8000/users/verify/?token={secret_token}'
+        message = f'Для подтверждения Е-mail перейдите по ссылке http://127.0.0.1:8000/users/verify/?token={secret_token}'
         send_mail(
             subject='Подтверждение E-mail адреса',
             message=message,
@@ -59,7 +46,7 @@ def activate_user(request):
 
 
 def generate_new_password(request):
-    # new_password  = ''.join([str(random.randint(0, 9)) for string in range(10)])
+
     new_password = get_new_password()
     send_mail(
         subject='Вы сменили пароль',
@@ -78,5 +65,5 @@ class ProfileView(UpdateView):
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
 
-    def get_object(self, queryset=None):  # тем самым уходим от привязки с pk
+    def get_object(self, queryset=None):
         return self.request.user

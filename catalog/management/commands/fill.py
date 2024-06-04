@@ -8,14 +8,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         Category.objects.all().delete()
         Product.objects.all().delete()
-
         category_list = [
-            {"pk": 1, "title": "Чай, кофе, какао",
-             "description": "Чай, кофе, какао"},
-            {"pk": 2, "title": "Кондитерские изделия",
-             "description": "Конфеты, шоколад, торты, пирожные, десерты"}
+            {"pk": 1, "title": "Огурцы, помидоры, лук",
+             "description": "Огурцы, помидоры, лук и пр."},
+            {"pk": 2, "title": "Овощи",
+             "description": "Огурцы, помидоры, лук и пр."}
         ]
-
         categories = []
         for category in category_list:
             categories.append(Category(**category))
@@ -24,28 +22,28 @@ class Command(BaseCommand):
 
         product_list = [{
             "pk": 1,
-            "title": "Бисквитные изделия",
-            "description": "Пирожное бисквитное МЕДВЕЖОНОК БАРНИ с шоколадной начинкой, 5х30г, Россия, 150 г",
-            "image": "images_product/барни.jpeg",
+            "title": "Огурцы",
+            "description": "Огурцы, короткоплодные, в развес, пр-во Россия",
+            "image": "images_product/cucumber_1.jpg",
             "category": categories[1],
-            "price": 85,
-            "date_of_creation": "2024-01-09",
-            "last_modified_date": "2024-01-09"
+            "price": 247,
+            "date_of_creation": "2024-05-31",
+            "last_modified_date": "2024-05-31"
         },
-            {"pk": 3, "title": "Зефир",
-             "description": "Зефир BONVIDA бело-розовый, 540г, Россия, 540 г",
-             "image": "images_product/зефир.jpeg",
+            {"pk": 3, "title": "Помидоры",
+             "description": "Помидор красный, в развес, пр-во Россия",
+             "image": "images_product/pomidor.jpg",
              "category": categories[1],
-             "price": 175,
-             "date_of_creation": "2024-01-09",
-             "last_modified_date": "2024-01-09"},
-            {"pk": 6, "title": "Цикорий",
-             "description": "Цикорий ELZA Натуральный, ст/б, 100г, Германия, 100 г",
-             "image": "images_product/цикорий.jpeg",
-             "category": categories[0],
-             "price": 365,
-             "date_of_creation": "2024-01-09",
-             "last_modified_date": "2024-01-09"}
+             "price": 152,
+             "date_of_creation": "2024-05-31",
+             "last_modified_date": "2024-05-31"},
+            {"pk": 6, "title": "Лук",
+             "description": "Лук репчатый, в развес, пр-во Россия",
+             "image": "images_product/luk.jpg",
+             "category": categories[1],
+             "price": 96,
+             "date_of_creation": "2024-05-31",
+             "last_modified_date": "2024-05-31"}
         ]
 
         products = []
