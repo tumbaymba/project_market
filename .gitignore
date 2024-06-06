@@ -81,3 +81,4 @@ cython_debug/
 !/data_shop.json
 !/data_blog.json
 !/data_shop.json
+!/.idea/
