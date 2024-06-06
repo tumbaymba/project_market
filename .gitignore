@@ -75,10 +75,5 @@ dmypy.json
 .pytype/
 cython_debug/
 
-!/data_catalog2.json
-!/data_shop.json
-!/data_catalog2.json
-!/data_shop.json
-!/data_blog.json
-!/data_shop.json
 !/.idea/
+!/Scripts/
